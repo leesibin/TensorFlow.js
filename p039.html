@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv=-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const t1 = tf.tensor1d([1, 2, 3]);
+      //   t1.print(true); //(true)하면 좀더 디테일하게 데이터 출력
+      //   const t2 = tf.tensor2d([
+      //     [1, 2, 3, 4],
+      //     [5, 6, 7, 8],
+      //     [9, 10, 11, 12],
+      //     [13, 14, 15, 16],
+      //   ]);
+      //   t2.print(1);
+      /* 비동기 API */
+      //   console.log(t1.data((d) => console.log(d)));
+      const t1p = t1.data((d) => {
+        return d;
+      });
+      console.log(t1p);
+
+      /* 동기 API */
+      console.log(t1.dataSync());
+    </script>
+  </body>
+</html>
