@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv=-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      //첫애플리케이션을 구현
+      const model = tf.sequential();
+      model.add(tf.layers.dense({ units: 1, inputShape: [2] }));
+
+      model.compile({ loss: "meanSquaredError", optimizer: "adam" }); //compile : model이 학습하는 준비 //optimizer : 최적화 연산
+
+      const xs = tf.tensor2d(
+        [
+          [0, 0],
+          [0, 1],
+          [1, 0],
+          [1, 1],
+        ],
+        [4, 2]
+      );
+      const fitParam = {
+        epochs: 5000,
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            console.log("epoch", epoch, logs, "RMSE=>", Math.sqrt(logs.loss));
+          },
+        },
+      }; //천번더 돌린다
+      const ys = tf.tensor2d([0, 1, 1, 0], [4, 1]);
+
+      model.fit(xs, ys, fitParam).then(() => {
+        //fit 결과 값을 다 맞춘다
+        model.predict(tf.tensor2d([[0, 1]], [1, 2])).print();
+      });
+    </script>
+  </body>
+</html>
