@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv=-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+  </head>
+  <body>
+    <form action="/up" method="post">
+    <input type="file" name="ufile" id="" required />
+    <input type="submit" value="전송" /></br>
+    <img id="img" src="./model/sun.jpg" />
+    <p id="pp"></p>
+  </form>
+    <script>
+      // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
+      // available on the index-page because of the script tag above.
+
+      const img = document.getElementById("img");
+      const p = document.getElementById("pp");
+
+      // Load the model.
+      mobilenet.load().then((model) => {
+        // Classify the image.
+        model.classify(img).then((predictions) => {
+          console.log("Predictions: ");
+          console.log(predictions);
+          p.textContent = predictions[0].className + predictions[0].probability;
+        });
+      });
+    </script>
+  </body>
+</html>
