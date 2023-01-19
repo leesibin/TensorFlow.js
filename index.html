@@ -12,19 +12,20 @@
     <form action="/up" method="post">
     <input type="file" name="ufile" id="" required />
     <input type="submit" value="전송" /></br>
-    <img id="img" src="./model/sun.jpg" />
-    <p id="pp"></p>
+    <img id="img"/>
+    <p id="pp" name="exit"></p>
   </form>
     <script>
-      // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
-      // available on the index-page because of the script tag above.
-
+      const emoticons = []
       const img = document.getElementById("img");
       const p = document.getElementById("pp");
 
-      // Load the model.
+      const todayEmoticon = emoticons[Math.floor(Math.random() * emoticons.length)];
+      img.src = `src/${todayEmoticon}`;
+        img.width = 300;
+      document.body.appendChild(img);
       mobilenet.load().then((model) => {
-        // Classify the image.
+  
         model.classify(img).then((predictions) => {
           console.log("Predictions: ");
           console.log(predictions);

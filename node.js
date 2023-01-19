@@ -11,12 +11,16 @@ console.log(_path);
 app.use("/", express.static(_path));
 app.use(logger("tiny"));
 
+var client_id = process.env.id;
+var client_secret = process.env.secret;
+
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
     cb(null, _path);
   },
   filename: (req, res, cb) => {
-    cb(null, file.originalname);
+    const imgs = req.body.emoticons;
+    cb(null, imgs);
   },
 });
 
@@ -28,9 +32,11 @@ app.post("/up", upload.single("ufile"), (req, res) => {
     '<script>alert("파일 업로드 완료");location.replace("index.html")</script>'
   );
 });
+
 app.get("/", function (req, res) {
   var api_url = "https://openapi.naver.com/v1/papago/n2mt";
   var request = require("request");
+  var query = req.body.exit;
   var options = {
     url: api_url,
     form: { source: "ko", target: "en", text: query },
