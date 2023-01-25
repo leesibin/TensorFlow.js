@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv=-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /*1.전이학습*/
+      let tem = [10, 11, 12, 13, 14];
+      let sel = [23, 25, 27, 29, 31]; //학습시키는 값
+      let xt = tf.tensor(tem); //텐서로변환
+      let yt = tf.tensor(sel); //텐서로변환
+      /*2.모델의 모양을 만들기*/
+      let X = tf.input({ shape: [1] }); //값 하나 들어옴
+      let Y = tf.layers.dense({ units: 1 }).apply(X); //apply를 통해 연결
+      let model = tf.model({ inputs: X, outputs: Y }); //인아웃풋 지정
+      let comileParam = {
+        optimizer: tf.train.adam(),
+        loss: tf.losses.meanSquaredError,
+      }; //최적화의 loss측정방법종류
+      model.compile(comileParam);
+      /*3.데이터로 학습을 시킴*/
+      const fitParm = {
+        epochs: 3000,
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            console.log("epoch", epoch, logs, "RMSE=>", Math.sqrt(logs.loss));
+          },
+        },
+      };
+      // const my = tf.tensor([29]); //배열을 추가후 그값에대한
+      model.fit(xt, yt, fitParm).then((_) => {
+        let result = model.predict(xt); //계산이다됬다면 : predict
+        result.print();
+        // model.save("downloads://my-model"); //파일생성
+        model.save("localstorage://my-model");
+        console.log("모델 저장됨");
+      });
+    </script>
+  </body>
+</html>
