@@ -25,7 +25,10 @@ export default {
         .then((res) => res.json())
         .then((body) => {
           const _ = body
+          const op =
+            _.getAirQualityInfoClassifiedByStation.body.items.item[0].pm10
           console.log(_)
+          console.log(op)
         })
     }
   }

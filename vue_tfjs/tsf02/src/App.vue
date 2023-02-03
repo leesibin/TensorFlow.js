@@ -1,7 +1,10 @@
 <template>
   <nav>
     <router-link to="/">[일반API율]</router-link> |
-    <router-link to="/pm25">[API부산공기질]</router-link>
+    <router-link to="/pm25">[API부산공기질]</router-link>|
+    <router-link to="/corona">[API코로나]</router-link>|
+    <router-link to="/papago">[번역기]</router-link>|
+    <router-link to="/crawling">[크롤링]학식정보</router-link>|
   </nav>
   <router-view />
 </template>
