@@ -10,11 +10,11 @@ async function getData() {
       horsepower: car.Horsepower,
     }))
     .filter((car) => car.mpg != null && car.horsepower != null);
-  //그러면 갤런당 마일이나 마력이 정의되지 않은 항목이 삭제됩니다.
 
   return cleaned;
 }
 async function run() {
+  // Load and plot the original input data that we are going to train on.
   const data = await getData();
   const values = data.map((d) => ({
     x: d.horsepower,
@@ -29,7 +29,8 @@ async function run() {
       yLabel: "MPG",
       height: 300,
     }
-  );
+  )
+
 
   // More code will be added below
   // Create the model
@@ -46,8 +47,8 @@ async function run() {
 }
 function createModel() {
   const model = tf.sequential();
-  model.add(tf.layers.dense({ units: 50, activation: "sigmoid" }));
   model.add(tf.layers.dense({ inputShape: [1], units: 1, useBias: true }));
+  model.add(tf.layers.dense({ units: 50, activation: "relu" }));
   model.add(tf.layers.dense({ units: 1, useBias: true }));
   return model;
 }
