@@ -1,10 +1,19 @@
+const express = require("express");
+const path = require("path");
+const logger = require("morgan");
+const app = express();
+const port = 3000;
+const _path = path.join(__dirname, "./dist");
 
-var express = require('express');
-var app = express();
+console.log(_path);
+app.use("/", express.static(_path));
+app.use(logger("tiny"));
+
 var client_id = 'Zeut_UqiIpn897SNv_ju'
 var client_secret = 'DVYymPvSwL'
-var query = encodeURI("https://developers.naver.com/docs/utils/shortenurl");
-app.get('/url', function (req, res) {
+app.get('/exapi', function (req, res) {
+  var query = encodeURI(req.body.ktk);
+  console.log(query);
    var api_url = 'https://openapi.naver.com/v1/util/shorturl';
    var request = require('request');
    var options = {
@@ -22,6 +31,6 @@ app.get('/url', function (req, res) {
      }
    });
  });
- app.listen(3000, function () {
-   console.log('http://127.0.0.1:3000/url app listening on port 3000!');
- });
+ app.listen(port, () => {
+  console.log(port + "에서 서버 동작 완료.");
+});

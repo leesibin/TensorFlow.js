@@ -1,7 +1,10 @@
 <template>
   <nav>
     <router-link to="/">Chart</router-link> |
-    <router-link to="/cam">WebCam Mobile-net</router-link>
+    <router-link to="/cam">WebCam Mobile-net</router-link>|
+    <router-link to="/camex">예제)WebCam Mobile-net</router-link>|
+    <router-link to="/img">예제)img Mobile-net</router-link>|
+    <router-link to="/exex">연습용</router-link>|
   </nav>
   <router-view />
 </template>
