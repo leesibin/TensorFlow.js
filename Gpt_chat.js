@@ -20,10 +20,15 @@ bot.on('message',async (msg) => {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: msg.text,
-    max_tokens: 500,
+    max_tokens: 100,
     temperature: 0.8,
-  
+    max_tokens: 256,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
   });
+  
+  console.log(msg.text)
   const chatId = msg.chat.id;
   const responseon =  response.data.choices[0].text
   console.log(response.data.choices);

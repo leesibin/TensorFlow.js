@@ -1,7 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">[일반API율]</router-link> |
-    <router-link to="/pm25">About</router-link>
+    <router-link to="/">page1</router-link> |
+    <router-link to="/page2">page2</router-link>|
+    <router-link to="/page3">page3</router-link>
   </nav>
   <router-view />
 </template>
