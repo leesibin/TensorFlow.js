@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
-const cw = require("./public/crawling01")
+const cw = require("./public/crawling01.js")
 const history = require('connect-history-api-fallback')
 const {createProxyMiddleware} = require('http-proxy-middleware')
 
@@ -15,7 +15,7 @@ app.use("/", express.static(_path));
 app.use(logger("tiny"));
 app.use(createProxyMiddleware('/v1',{target:'http://openapi.naver.com',changeOrigin:true}))
 
-app.get('/hek',(req,res)=>{
+app.get('/crawling',(req,res)=>{
   console.log('준비')
   cw.ax().then((v)=>{
     console.log(v)

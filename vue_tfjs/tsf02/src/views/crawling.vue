@@ -6,8 +6,8 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from 'axios'
-
 export default {
   name: 'app',
   data() {
@@ -15,14 +15,14 @@ export default {
       data: ''
     }
   },
-  methods: {
-    getData: function () {
-      this.data = '크롤링중...'
-      axios.get('/hek').then((res) => {
-        this.data = res.data
-      })
-    }
-  }
+  created() {
+    this.data = '크롤링중...'
+    axios.get('/crawling').then((res) => {
+      this.data = res.data
+      console.log(res)
+    })
+  },
+  methods: {}
 }
 </script>
 <style></style>
