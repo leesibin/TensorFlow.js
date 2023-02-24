@@ -2,14 +2,12 @@ const axios = require('axios') // 리퀘스트 용도
 const cheerio = require('cheerio') // 선택자 용도
 
 exports.ax= async function(){
-  
   let steam = ""
   let gamersgate = ""
   let  dreamgame  = ""
   //steam 시작
 let url1 =
   'https://store.steampowered.com/search/?specials=1&filter=topsellers&supportedlang=english&ndl=12'
-
 await axios.get(url1).then((res) => {
   let $ = cheerio.load(res.data)
   let steam_title = [],
@@ -22,7 +20,6 @@ await axios.get(url1).then((res) => {
       })
       $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow').each(function () {
         steam_discount_price.push($(this).text())
-        console.log(steam_discount_price)
   })
   $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow > span > strike').each(function () {
     steam_price.push($(this).text())
@@ -61,7 +58,7 @@ await axios.get(url2).then((res) => {
 }
   for (i in gamersgate_title) {
     let game2 = `${' gamersgate : ' + gamersgate_title[i]} ${' 할인률: '+gamersgate_discount_percent[i]} ${'  원가 :' + gamersgate_price[i]}${' steam : '+ gamersgate_discount_price[i]}`
-    gamersgate += game2 + '<br/>'
+    dreamgame += game2 + '<br/>'
   }
 })
 
@@ -90,7 +87,7 @@ await axios.get(url3).then((res) => {
 }
   for (i in  dreamgame_title) {
     let game3 = `${'dreamgame : ' +  dreamgame_title[i]} ${' 할인률: '+ dreamgame_discount_percent[i]} ${'  원가 :' +  dreamgame_price[i]}${' 할인가 : '+ dreamgame_discount_price[i]}`
-     dreamgame += game3 + '<br/>'
+    gamersgate += game3 + '<br/>'
   }
 })
 let allgame = steam + gamersgate +  dreamgame 
