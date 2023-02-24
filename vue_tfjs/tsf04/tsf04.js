@@ -35,18 +35,51 @@ app.post('/dbc',(req,res)=>{
   
 
 /* CRUD 에서 R = Read*/
-app.get('/dbr',(req,res)=>{}) 
+app.get('/dbr/:date',(req,res)=>{
+  // const date = req.param('date')
+  const date = req.params.date
+  ;(async()=>{
+    const t = await Vschema.find({date},{id:0,__v:0})
+    .lean().then((t)=>{
+      res.send(t)
+      console.log(t)
+    })
+  })()
+  })
+ 
+
 
 /* CRUD 에서 U = Update*/
-app.post('/dbu',(req,res)=>{}) 
+app.post('/dbu',(req,res)=>{
+  ;(async() => {
+    const t = await Vschema.updateOne({
+      date : req.body.date
+    },{
+      $set:{
+        title:req.body.title,
+      content:req.body.content,
+      date:req.body.date
+    }
+    },
+    {upsert:true}
+      )
+    console.log(t)
+    res.send('업데이트완료')
+  })()
+    })
 
 /* CRUD 에서 D = Delete*/
-app.get('/dbd',(req,res)=>{}) 
-
-
-
-
-
+app.get('/dbd/:date',(req,res)=>{
+  // const date = req.param('date')
+  const date = req.params.date
+  ;(async()=>{
+    const t = await Vschema.deleteMany({date:{$eq:date}})
+    .then((t)=>{
+      res.send('삭제완료')
+      console.log(t)
+    })
+  })()
+  })
 app.listen(port, () => {
   console.log(port + "에서 서버 동작 완료.");
 });
