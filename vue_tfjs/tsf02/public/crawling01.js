@@ -1,11 +1,11 @@
 const axios = require('axios') // 리퀘스트 용도
 const cheerio = require('cheerio') // 선택자 용도
+let steam = ""
+let gamersgate = ""
+let dreamgame  = ""
 
 exports.ax= async function(){
   
-  let steam = ""
-  let gamersgate = ""
-  let  dreamgame  = ""
   //steam 시작
 let url1 =
   'https://store.steampowered.com/search/?specials=1&filter=topsellers&supportedlang=english&ndl=12'
@@ -20,7 +20,7 @@ await axios.get(url1).then((res) => {
       $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_name.ellipsis > span').each(function () {
         steam_title.push($(this).text())
       })
-      $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow').each(function () {
+      $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow>#text').each(function () {
         steam_discount_price.push($(this).text())
         console.log(steam_discount_price)
   })
@@ -31,9 +31,9 @@ await axios.get(url1).then((res) => {
     steam_discount_percent.push($(this).text())
   })
 }
-  for (i in steam_title) {
-    let game1 = `${' steam : ' + steam_title[i]} ${' 할인률: '+steam_discount_percent[i]} ${'  원가 :' + steam_price[i]}${' 할인가 : '+ steam_discount_price[i]}`
-    steam += game1 + '<br/>'
+  for (j in steam_title) {
+    let game1 = `${' steam : ' + steam_title[j]} ${' 할인률: '+steam_discount_percent[j]} ${'  원가 :' + steam_price[j]}${' 할인가 : '+ steam_discount_price[j]}`
+    steam = game1 + '<br/>'
   }
 })
 // gamersgate 시작
@@ -45,7 +45,7 @@ await axios.get(url2).then((res) => {
   gamersgate_price = [],
   gamersgate_discount_percent = [],
   gamersgate_discount_price=[]
-    for (let i = 0; i <20; i++){
+    for (let i = 1; i <20; i++){
   $('body > main > section > div > div > div.column.column-content > div > div.catalog-list-decorator > div > div:nth-child('+i+') > div > div.catalog-item--description > div.catalog-item--title > a').each(function () {
     gamersgate_title.push($(this).text())
   })
@@ -59,14 +59,14 @@ await axios.get(url2).then((res) => {
     gamersgate_discount_percent.push($(this).text())
   })
 }
-  for (i in gamersgate_title) {
-    let game2 = `${' gamersgate : ' + gamersgate_title[i]} ${' 할인률: '+gamersgate_discount_percent[i]} ${'  원가 :' + gamersgate_price[i]}${' steam : '+ gamersgate_discount_price[i]}`
-    gamersgate += game2 + '<br/>'
+  for (j in gamersgate_title) {
+    let game2 = `${' gamersgate : ' + gamersgate_title[j]} ${' 할인률: '+gamersgate_discount_percent[j]} ${'  원가 :' + gamersgate_price[j]}${' 할인가 : '+ gamersgate_discount_price[j]}`
+    gamersgate = game2 + '<br/>'
   }
 })
 
 // dreamgame  시작
-let url3= 'https://www.dreamgame.com/en/games?orderby=30'
+let url3= 'http://www.dreamgame.com/en/games?orderby=30'
 
 await axios.get(url3).then((res) => {
   let $ = cheerio.load(res.data)
@@ -74,23 +74,24 @@ await axios.get(url3).then((res) => {
    dreamgame_price = [],
    dreamgame_discount_percent = [],
    dreamgame_discount_price=[]
-    for (let i = 0; i <20; i++){
-  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child(1) > a > div > div.card-body.mh-150 > p.cardtitle').each(function () {
+   for (let i = 1; i <21; i++) {
+  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child('+i+') > a > div > div.card-body.mh-150 > p.cardtitle').each(function () {
      dreamgame_title.push($(this).text())
   })
-  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child(1) > a > div > div.card-body.mh-150 > p.cardprice > s').each(function () {
+  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child('+i+') > a > div > div.card-body.mh-150 > p.cardprice > s').each(function () {
      dreamgame_price.push($(this).text())
   })
-  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child(1) > a > div > div.card-body.mh-150 > p.cardprice > span').each(function () {
+  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child('+i+') > a > div > div.card-body.mh-150 > p.cardprice > span').each(function () {
      dreamgame_discount_percent.push($(this).text())
   })
-  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child(1) > a > div > div.card-body.mh-150 > p.cardprice >#text').each(function () {
+  $('#TwoColumns > div.row > div.col-lg-9 > div.row.row-cols-2.row-cols-sm-2.row-cols-md-4.row-cols-lg-4.row-cols-xl-4.gx-3 > div:nth-child(1) > a > div > div.card-body.mh-150 > p.cardprice>#text').each(function () {
      dreamgame_discount_price.push($(this).text())
   })
 }
-  for (i in  dreamgame_title) {
-    let game3 = `${'dreamgame : ' +  dreamgame_title[i]} ${' 할인률: '+ dreamgame_discount_percent[i]} ${'  원가 :' +  dreamgame_price[i]}${' 할인가 : '+ dreamgame_discount_price[i]}`
-     dreamgame += game3 + '<br/>'
+
+  for (j in  dreamgame_title) {
+    let game3 = `${'dreamgame : ' +  dreamgame_title[j]} ${' 할인률: '+ dreamgame_discount_percent[j]} ${'  원가 :' +  dreamgame_price[j]}${' 할인가 : '+ dreamgame_discount_price[j]}`
+     dreamgame = game3 + '<br/>'
   }
 })
 let allgame = steam + gamersgate +  dreamgame 
