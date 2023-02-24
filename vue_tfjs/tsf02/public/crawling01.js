@@ -6,10 +6,12 @@ let dreamgame  = ""
 
 exports.ax= async function(){
   
+  let steam = ""
+  let gamersgate = ""
+  let  dreamgame  = ""
   //steam 시작
 let url1 =
   'https://store.steampowered.com/search/?specials=1&filter=topsellers&supportedlang=english&ndl=12'
-
 await axios.get(url1).then((res) => {
   let $ = cheerio.load(res.data)
   let steam_title = [],
@@ -22,7 +24,6 @@ await axios.get(url1).then((res) => {
       })
       $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow>#text').each(function () {
         steam_discount_price.push($(this).text())
-        console.log(steam_discount_price)
   })
   $('#search_resultsRows > a:nth-child('+i+') > div.responsive_search_name_combined > div.col.search_price_discount_combined.responsive_secondrow > div.col.search_price.discounted.responsive_secondrow > span > strike').each(function () {
     steam_price.push($(this).text())
@@ -59,9 +60,9 @@ await axios.get(url2).then((res) => {
     gamersgate_discount_percent.push($(this).text())
   })
 }
-  for (j in gamersgate_title) {
-    let game2 = `${' gamersgate : ' + gamersgate_title[j]} ${' 할인률: '+gamersgate_discount_percent[j]} ${'  원가 :' + gamersgate_price[j]}${' 할인가 : '+ gamersgate_discount_price[j]}`
-    gamersgate = game2 + '<br/>'
+  for (i in gamersgate_title) {
+    let game2 = `${' gamersgate : ' + gamersgate_title[i]} ${' 할인률: '+gamersgate_discount_percent[i]} ${'  원가 :' + gamersgate_price[i]}${' steam : '+ gamersgate_discount_price[i]}`
+    gamersgate += game2 + '<br/>'
   }
 })
 
@@ -88,10 +89,9 @@ await axios.get(url3).then((res) => {
      dreamgame_discount_price.push($(this).text())
   })
 }
-
-  for (j in  dreamgame_title) {
-    let game3 = `${'dreamgame : ' +  dreamgame_title[j]} ${' 할인률: '+ dreamgame_discount_percent[j]} ${'  원가 :' +  dreamgame_price[j]}${' 할인가 : '+ dreamgame_discount_price[j]}`
-     dreamgame = game3 + '<br/>'
+  for (i in  dreamgame_title) {
+    let game3 = `${'dreamgame : ' +  dreamgame_title[i]} ${' 할인률: '+ dreamgame_discount_percent[i]} ${'  원가 :' +  dreamgame_price[i]}${' 할인가 : '+ dreamgame_discount_price[i]}`
+     dreamgame += game3 + '<br/>'
   }
 })
 let allgame = steam + gamersgate +  dreamgame 

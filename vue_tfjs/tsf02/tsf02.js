@@ -17,8 +17,9 @@ app.get('/crawling',(req,res)=>{
   console.log('준비')
   cw.ax().then((v)=>{
     console.log(v)
-    res.send(v);
+    res.send(v)
   })
+  
 })
 
 app.listen(port, () => {
