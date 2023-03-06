@@ -4,8 +4,6 @@ const logger = require("morgan");
 const cw = require("./public/crawling01.js")
 const history = require('connect-history-api-fallback')
 const {createProxyMiddleware} = require('http-proxy-middleware')
-
-
 const app = express();
 const port = 3000;
 const _path = path.join(__dirname, "./dist");
