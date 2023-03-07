@@ -7,3 +7,4 @@ pip install tensorflowjs (3.6.8완벽 동작, 3.8 이하 동작) 설치
 tensorflowjs_converter --input_format=keras ./model/iris_model.h5 ./model/
 
 tensorflowjs_converter --input_format=tfjs_layers_model ./model/model.json ./model/exit.h5
+#판다스 파이썬
